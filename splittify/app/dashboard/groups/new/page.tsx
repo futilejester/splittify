@@ -22,7 +22,6 @@ export default function NewGroupPage() {
     setError('');
     setLoading(true);
 
-    // Create the group
     const { data: group, error: groupErr } = await supabase
       .from('groups')
       .insert({ name: name.trim(), created_by: user.id })
@@ -30,18 +29,17 @@ export default function NewGroupPage() {
       .single();
 
     if (groupErr || !group) {
-      setError(groupErr?.message ?? 'Failed to create group.');
+      setError(`Group insert failed: ${groupErr?.message}`);
       setLoading(false);
       return;
     }
 
-    // Auto-add creator as member
     const { error: memberErr } = await supabase
       .from('group_members')
       .insert({ group_id: group.id, user_id: user.id });
 
     if (memberErr) {
-      setError(memberErr.message);
+      setError(`Member insert failed: ${memberErr?.message}`);
       setLoading(false);
       return;
     }
@@ -56,17 +54,14 @@ export default function NewGroupPage() {
         <Link href="/dashboard" className="btn btn-ghost" style={{ marginBottom: '1.5rem', padding: '0.4rem 0', color: 'var(--text-muted)' }}>
           <ArrowLeft size={16} /> Back to dashboard
         </Link>
-
         <div style={{ marginBottom: '2rem' }}>
           <h1 style={{ fontFamily: 'Fraunces, serif', fontSize: '2rem', fontWeight: 700, color: 'var(--navy)', marginBottom: '0.5rem' }}>
             Create a group
           </h1>
           <p style={{ color: 'var(--text-muted)' }}>Give your group a name — you can invite others right after.</p>
         </div>
-
         <div className="card" style={{ padding: '2rem' }}>
           {error && <div className="alert alert-error">{error}</div>}
-
           <form onSubmit={handleCreate}>
             <div className="form-group">
               <label className="form-label">Group name</label>
@@ -81,7 +76,6 @@ export default function NewGroupPage() {
                 maxLength={80}
               />
             </div>
-
             <div style={{
               background: 'var(--bg-subtle)', border: '1px solid var(--border)',
               borderRadius: 10, padding: '0.875rem 1rem', marginBottom: '1.25rem',
@@ -91,14 +85,9 @@ export default function NewGroupPage() {
               <Users size={15} style={{ flexShrink: 0 }} />
               You&apos;ll be added automatically. Invite others after creating.
             </div>
-
             <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
               <Link href="/dashboard" className="btn btn-outline">Cancel</Link>
-              <button
-                type="submit"
-                className="btn btn-coral"
-                disabled={loading || !name.trim()}
-              >
+              <button type="submit" className="btn btn-coral" disabled={loading || !name.trim()}>
                 {loading ? 'Creating…' : 'Create group'}
               </button>
             </div>

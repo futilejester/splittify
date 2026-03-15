@@ -73,6 +73,11 @@ NEXT_PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR...
 ```
 
+https://rrzfomyvyipaihnckszo.supabase.co
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyemZvbXl2eWlwYWlobmNrc3pvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1Nzk0MjcsImV4cCI6MjA4OTE1NTQyN30.jnSOU9d-uR5sTCVVkCbJyNLDbHIBJvDUsL4n4h1YnsA
+
+
 Paste them into `.env.local`.
 
 ---
